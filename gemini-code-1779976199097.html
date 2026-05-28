@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memories That Will Never End</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Modern Reset and Theme Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #1a252f;
+            --accent: #d4af37; /* Elegant Gold */
+            --light: #f8f9fa;
+            --dark: #333333;
+            --success: #27ae60;
+            --danger: #c0392b;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Top Bar for Social Media Only */
+        .top-bar {
+            background-color: var(--secondary);
+            padding: 10px 40px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+        }
+
+        .top-bar a {
+            color: #ffffff;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .top-bar a:hover {
+            color: var(--accent);
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo h1 span {
+            color: var(--accent);
+        }
+
+        /* Responsive Mobile Menu Toggle Button (The 3 Lines) */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1010;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        /* Main Content Wrapper */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            min-height: 60vh;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography */
+        h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+            margin: 10px auto 30px auto;
+        }
+
+        /* Home Page - Product Grid */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(26, 37, 47, 0.9));
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 15px auto 0 auto;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .order-now-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .order-now-btn:hover {
+            background-color: var(--secondary);
+        }
+
+        /* About Us Content Styling */
+        .about-content {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* Forms Styling */
+        .form-container {
+            background-color: #ffffff;
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .form-container form input, 
+        .form-container form select, 
+        .form-container form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-top: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #ffffff;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-primary { background-color: var(--primary); }
+        .btn-primary:hover { background-color: var(--secondary); }
+        .btn-danger { background-color: var(--danger); }
+        .btn-danger:hover { background-color: #a0281c; }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: #ffffff;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        /* --- MOBILE RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 10px 20px;
+                justify-content: center; /* Center social icons on mobile */
+            }
+
+            .nav-container {
+                padding: 15px 20px;
+            }
+
+            .logo h1 {
+                font-size: 1.3rem; /* Slightly smaller logo text for small screens */
+            }
+
+            /* Display the 3-line hamburger button */
+            .menu-toggle {
+                display: block;
+            }
+
+            /* Transform the nav list into a mobile drop-down menu */
+            nav {
+                display: none; /* Hidden by default, toggled via JavaScript */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #ffffff;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+                padding: 10px 0;
+                gap: 0;
+            }
+
+            /* Show nav menu when 'active' class is injected via JS */
+            nav.open {
+                display: flex;
+            }
+
+            .nav-btn {
+                width: 100%;
+                text-align: left;
+                padding: 15px 25px;
+                border-radius: 0;
+                border-bottom: 1px solid #eee;
+            }
+
+            .nav-btn:hover, .nav-btn.active {
+                background-color: var(--light);
+                color: var(--primary);
+                border-left: 4px solid var(--primary);
+            }
+
+            .container {
+                margin: 20px auto;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+            
+            .product-card img {
+                height: 320px; /* Shorter image height cards for mobile comfort */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" target="_blank" title="Twitter"><i class="fab fa-x-twitter"></i></a>
+    </div>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <h1>Memories That Will<span> Never End</span></h1>
+            </div>
+            
+            <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="navMenu">
+                <button class="nav-btn active" onclick="switchTab('home')">HOME</button>
+                <button class="nav-btn" onclick="switchTab('about')">ABOUT US</button>
+                <button class="nav-btn" onclick="switchTab('order')">ORDER</button>
+                <button class="nav-btn" onclick="switchTab('cancel')">CANCEL ORDER</button>
+                <button class="nav-btn" onclick="switchTab('contact')">CONTACT US</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section id="home" class="page-section active">
+            <div class="hero">
+                <h2>Honouring Legacies With Distinction</h2>
+                <p>We craft high-end, durable, and highly personalized masterpieces tailored to reflect the precious memories of your loved ones.</p>
+            </div>
+            
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="WhatsApp Image 2026-05-28 at 15.14.38 (1).jpeg" alt="The Classical Two-Tone Executive">
+                    <div class="product-info">
+                        <h3 class="product-title">The Classical Two-Tone Executive</h3>
+                        <div class="product-price">R 24,500.00</div>
+                        <button class="order-now-btn" onclick="selectProduct('The Classical Two-Tone Executive')">Select to Order</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="WhatsApp Image 2026-05-28 at 15.14.38.jpeg" alt="The Contemporary Stepped Granite Suite">
+                    <div class="product-info">
+                        <h3 class="product-title">The Contemporary Stepped Granite Suite</h3>
+                        <div class="product-price">R 38,900.00</div>
+                        <button class="order-now-btn" onclick="selectProduct('The Contemporary Stepped Granite Suite')">Select to Order</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="WhatsApp Image 2026-05-28 at 15.14.37 (2).jpeg" alt="The Floral Garden Tribute Deck">
+                    <div class="product-info">
+                        <h3 class="product-title">The Floral Garden Tribute Deck</h3>
+                        <div class="product-price">R 42,000.00</div>
+                        <button class="order-now-btn" onclick="selectProduct('The Floral Garden Tribute Deck')">Select to Order</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="WhatsApp Image 2026-05-28 at 15.14.37 (1).jpeg" alt="The Premium Monolith Pillar Canopy">
+                    <div class="product-info">
+                        <h3 class="product-title">The Premium Monolith Pillar Canopy</h3>
+                        <div class="product-price">R 55,000.00</div>
+                        <button class="order-now-btn" onclick="selectProduct('The Premium Monolith Pillar Canopy')">Select to Order</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="WhatsApp Image 2026-05-28 at 15.14.37.jpeg" alt="The Marble Inlay Cathedral Column">
+                    <div class="product-info">
+                        <h3 class="product-title">The Marble Inlay Cathedral Column</h3>
+                        <div class="product-price">R 49,500.00</div>
+                        <button class="order-now-btn" onclick="selectProduct('The Marble Inlay Cathedral Column')">Select to Order</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <img src="WhatsApp Image 2026-05-28 at 15.14.36.jpeg" alt="The Majestic Multi-Tier Headstone">
+                    <div class="product-info">
+                        <h3 class="product-title">The Majestic Multi-Tier Headstone</h3>
+                        <div class="product-price">R 62,000.00</div>
+                        <button class="order-now-btn" onclick="selectProduct('The Majestic Multi-Tier Headstone')">Select to Order</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="page-section">
+            <h2>About Us</h2>
+            <div class="about-content">
+                <p>Welcome to <strong>Memories That Will Never End</strong>. We are a premier, professional South African monumental stonemasonry business dedicated to providing unmatched craftsmanship and compassionate service during your times of remembrance.</p>
+                <p>Our team understands that a tombstone is more than just granite or marble—it is an enduring sanctuary of memory, a celebration of life, and a permanent testament to love. Because of this deep responsibility, we source only the finest premium grade raw stones, ensuring every cut, polish, and custom lettering detail is perfectly handled to withstand weather elements across generations.</p>
+                <p>With transparent pricing, an uncompromising eye for elegance, and deep respect for cultural traditions, we strive to make the commemoration process seamless, respectful, and completely reassuring for every family we serve.</p>
+            </div>
+        </section>
+
+        <section id="order" class="page-section">
+            <h2>Place Your Order</h2>
+            <div class="form-container">
+                <form id="orderForm" onsubmit="handleFormSubmit(event, 'Order placed successfully!')">
+                    <div class="form-group">
+                        <label for="productSelect">Selected Tombstone Design</label>
+                        <select id="productSelect" class="form-control" required>
+                            <option value="">-- Select a Design --</option>
+                            <option value="The Classical Two-Tone Executive">The Classical Two-Tone Executive - R 24,500.00</option>
+                            <option value="The Contemporary Stepped Granite Suite">The Contemporary Stepped Granite Suite - R 38,900.00</option>
+                            <option value="The Floral Garden Tribute Deck">The Floral Garden Tribute Deck - R 42,000.00</option>
+                            <option value="The Premium Monolith Pillar Canopy">The Premium Monolith Pillar Canopy - R 55,000.00</option>
+                            <option value="The Marble Inlay Cathedral Column">The Marble Inlay Cathedral Column - R 49,500.00</option>
+                            <option value="The Majestic Multi-Tier Headstone">The Majestic Multi-Tier Headstone - R 62,000.00</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientName">Full Name</label>
+                        <input type="text" id="clientName" class="form-control" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientPhone">Phone Number</label>
+                        <input type="tel" id="clientPhone" class="form-control" placeholder="e.g. 082 123 4567" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientEmail">Email Address</label>
+                        <input type="email" id="clientEmail" class="form-control" placeholder="name@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inscription_text">Custom Inscription Text</label>
+                        <textarea id="inscription_text" class="form-control" rows="4" placeholder="Type the text exactly how it should appear on the stone..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn btn-primary">Submit Order Request</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="cancel" class="page-section">
+            <h2>Cancel Your Order</h2>
+            <div class="form-container">
+                <form onsubmit="handleFormSubmit(event, 'Cancellation request submitted. Our team will contact you shortly.')">
+                    <div class="form-group">
+                        <label for="orderNumber">Order Reference Number</label>
+                        <input type="text" id="orderNumber" class="form-control" placeholder="e.g. EMT-108234" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cancelReason">Reason for Cancellation</label>
+                        <textarea id="cancelReason" class="form-control" rows="4" placeholder="Please let us know your reason for cancellation..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn btn-danger">Cancel My Order</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="contact" class="page-section">
+            <h2>Contact Us</h2>
+            <div class="form-container">
+                <form onsubmit="handleFormSubmit(event, 'Message sent successfully! We will get back to you shortly.')">
+                    <div class="form-group">
+                        <label for="contactName">Name</label>
+                        <input type="text" id="contactName" class="form-control" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">Email</label>
+                        <input type="email" id="contactEmail" class="form-control" placeholder="Your email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactMessage">Message</label>
+                        <textarea id="contactMessage" class="form-control" rows="5" placeholder="How can we assist you today?" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <div class="footer-icons" style="margin-bottom: 15px; font-size: 1.5rem; display: flex; justify-content: center; gap: 25px;">
+            <a href="#" style="color: white;"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" style="color: white;"><i class="fab fa-instagram"></i></a>
+            <a href="#" style="color: white;"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" style="color: white;"><i class="fab fa-x-twitter"></i></a>
+        </div>
+        <p>&copy; 2026 Memories That Will Never End. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Toggle Mobile Menu open/close
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('open');
+        }
+
+        // Close Mobile Menu automatically when a link/button is clicked
+        function closeMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.remove('open');
+        }
+
+        function switchTab(tabId) {
+            // Close mobile dropdown menu first if open
+            closeMenu();
+
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            
+            // Highlight matching nav menu entry safely
+            const navButtons = Array.from(document.querySelectorAll('.nav-btn'));
+            const indexMap = { 'home': 0, 'about': 1, 'order': 2, 'cancel': 3, 'contact': 4 };
+            if(navButtons[indexMap[tabId]]) {
+                navButtons[indexMap[tabId]].classList.add('active');
+            }
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function selectProduct(productName) {
+            const dropdown = document.getElementById('productSelect');
+            dropdown.value = productName;
+            switchTab('order');
+        }
+
+        function handleFormSubmit(event, dynamicAlertText) {
+            event.preventDefault();
+            alert(dynamicAlertText);
+            event.target.reset();
+            switchTab('home');
+        }
+    </script>
+</body>
+</html>
